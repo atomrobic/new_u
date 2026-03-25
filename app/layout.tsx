@@ -127,6 +127,8 @@ const organizationLd = {
 };
 
 
+import FloatingCTA from "./components/FloatingCTA";
+
 export default function RootLayout({
   children,
 }: {
@@ -160,6 +162,7 @@ export default function RootLayout({
 
       <body className="min-h-full bg-kcc-paper text-black antialiased">
         {children}
+        <FloatingCTA />
       </body>
     </html>
   );

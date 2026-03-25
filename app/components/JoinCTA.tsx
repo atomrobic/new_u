@@ -6,9 +6,10 @@ const cards = [
     title: "Join the chat",
     description:
       "Meet other developers, ask questions, and stay close to what the community is building.",
-    href: "https://chat.whatsapp.com/Kd3tVwJfjjh0HRZtoYfxcm",
+    href: "/join",
     label: "Open WhatsApp",
     icon: MessageCircle,
+    isExternal: false,
   },
   {
     title: "Contribute on GitHub",
@@ -17,6 +18,7 @@ const cards = [
     href: "https://github.com/KERALACODERSCAFE/Keralacoderscafe",
     label: "View repository",
     icon: Github,
+    isExternal: true,
   },
 ];
 
@@ -57,8 +59,8 @@ export default function JoinCTA() {
                   <Link
                     key={card.title}
                     href={card.href}
-                    target="_blank"
-                    rel="noopener"
+                    target={card.isExternal ? "_blank" : undefined}
+                    rel={card.isExternal ? "noopener" : undefined}
                     className={`group border-4 border-white bg-white/5 p-8 transition-all hover:translate-x-[-4px] hover:translate-y-[-4px] hover:bg-white/10 hover:shadow-[8px_8px_0px_0px_rgba(255,255,255,1)] ${card.title === "Contribute on GitHub" ? "hidden md:block" : "block"
                       }`}
                   >

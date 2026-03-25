@@ -119,10 +119,8 @@ export default function NavBar() {
               ))}
 
               <Link
-                href="https://chat.whatsapp.com/Kd3tVwJfjjh0HRZtoYfxcm"
-                target="_blank"
-                rel="noopener"
-                className="ml-2 inline-flex h-10 items-center gap-2 border-2 border-black bg-kcc-accent px-5 rounded-full text-sm font-medium uppercase text-white hover:bg-black hover:text-white transition-all"
+                href="/join"
+                className="ml-2 inline-flex h-10 items-center gap-2 border-2 border-black bg-kcc-accent px-5 rounded-full text-sm font-medium uppercase text-white hover:bg-black hover:text-white transition-all shadow-[2px_2px_0px_0px_rgba(0,0,0,1)] hover:translate-x-[-1px] hover:translate-y-[-1px] hover:shadow-[3px_3px_0px_0px_rgba(0,0,0,1)]"
               >
                 Join
                 <ArrowUpRight className="h-4 w-4" />
@@ -201,13 +199,11 @@ export default function NavBar() {
           </div>
 
           <Link
-            href="https://chat.whatsapp.com/Kd3tVwJfjjh0HRZtoYfxcm"
-            target="_blank"
-            rel="noopener"
+            href="/join"
             onClick={() => setIsOpen(false)}
-            className="mt-6 inline-flex h-12 w-full items-center justify-center gap-2 border-2 border-black bg-kcc-accent rounded-full px-5 text-sm font-medium uppercase text-white hover:bg-black transition-all"
+            className="mt-6 inline-flex h-12 w-full items-center justify-center gap-2 border-2 border-black bg-kcc-accent rounded-full px-5 text-sm font-medium uppercase text-white hover:bg-black transition-all shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] active:translate-x-[2px] active:translate-y-[2px] active:shadow-[2px_2px_0px_0px_rgba(0,0,0,1)]"
           >
-            Join WhatsApp
+            Join the community
             <ArrowUpRight className="h-5 w-5" />
           </Link>
         </div>

@@ -42,16 +42,16 @@ export default function Hero() {
       })
       .catch((err) => console.error("Failed to fetch GitHub contributors:", err));
   }, []);  return (
-    <header className="relative overflow-hidden px-6 pb-20 pt-32 md:px-12 lg:pb-28 lg:pt-48 bg-white border-b-4 border-black">
+    <header className="relative overflow-hidden px-6 pb-28 pt-44 md:px-12 lg:pb-36 lg:pt-56 bg-white border-b-4 border-black">
       {/* Geometric Background Elements */}
       <div className="absolute top-20 left-10 h-32 w-32 border-4 border-black bg-kcc-gold -z-10 rotate-12 shadow-[8px_8px_0px_0px_rgba(0,0,0,1)] hidden lg:block" />
       <div className="absolute bottom-20 right-20 h-40 w-40 border-4 border-black bg-kcc-green -z-10 -rotate-6 shadow-[10px_10px_0px_0px_rgba(0,0,0,1)] hidden lg:block" />
       <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 h-full w-full bg-[radial-gradient(#000_1.5px,transparent_1.5px)] [background-size:32px_32px] opacity-10 -z-10" />
 
       <div className="mx-auto max-w-[1280px]">
-        <div className="grid items-center gap-20 lg:grid-cols-[minmax(0,1.1fr)_minmax(360px,0.9fr)]">
+        <div className="grid items-center gap-24 lg:grid-cols-[minmax(0,1.1fr)_minmax(360px,0.9fr)]">
           <div className="max-w-[750px]">
-            <div className="mt-7 animate-fade-in-up delay-100">
+            <div className="mt-10 animate-fade-in-up delay-100">
               <span className="inline-block border-2 border-black bg-kcc-green px-4 py-1.5 text-sm font-black uppercase tracking-widest shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] mb-6">
                 Built in Kerala • Powered by curiosity
               </span>
@@ -65,7 +65,7 @@ export default function Hero() {
               </h1>
 
               <p
-                className="mt-12 max-w-[640px] text-[1.2rem] font-bold leading-relaxed text-black sm:text-[1.35rem] border-4 border-black p-6 shadow-[6px_6px_0px_0px_rgba(0,0,0,1)] bg-white"
+                className="mt-16 max-w-[640px] text-[1.2rem] font-bold leading-relaxed text-black sm:text-[1.35rem] border-4 border-black p-6 shadow-[6px_6px_0px_0px_rgba(0,0,0,1)] bg-white"
               >
                 A vibrant community of developers, designers, and tech
                 enthusiasts from Kerala. Building the future, one commit at a
@@ -73,7 +73,7 @@ export default function Hero() {
               </p>
             </div>
 
-            <div className="mt-12 hidden flex-wrap gap-4 animate-fade-in-up delay-200 md:flex">
+            <div className="mt-20 hidden flex-wrap gap-4 animate-fade-in-up delay-200 md:flex">
               {highlights.map((item) => (
                 <div
                   key={item}
@@ -84,7 +84,7 @@ export default function Hero() {
               ))}
             </div>
 
-            <div className="mt-14 flex flex-col gap-5 animate-fade-in-up delay-300 sm:flex-row">
+            <div className="mt-22 flex flex-col gap-6 animate-fade-in-up delay-300 sm:flex-row">
               <Link
                 href="https://github.com/KERALACODERSCAFE/Keralacoderscafe"
                 target="_blank"
@@ -96,17 +96,15 @@ export default function Hero() {
               </Link>
 
               <Link
-                href="https://chat.whatsapp.com/Kd3tVwJfjjh0HRZtoYfxcm"
-                target="_blank"
-                rel="noopener"
+                href="/join"
                 className="inline-flex h-16 items-center justify-center gap-3 border-3 border-black bg-kcc-gold px-8 text-base font-black uppercase text-black shadow-[6px_6px_0px_0px_rgba(0,0,0,1)] hover:translate-x-[-2px] hover:translate-y-[-2px] hover:shadow-[8px_8px_0px_0px_rgba(0,0,0,1)] active:translate-x-[2px] active:translate-y-[2px] active:shadow-[2px_2px_0px_0px_rgba(0,0,0,1)] transition-all"
               >
                 <MessageCircle className="h-5 w-5 stroke-[3]" />
-                Join WhatsApp
+                Join the community
               </Link>
             </div>
 
-            <div className="mt-12 flex flex-wrap items-center gap-6 text-[0.95rem] font-bold uppercase animate-fade-in-up delay-400">
+            <div className="mt-22 flex flex-wrap items-center gap-6 text-[0.95rem] font-bold uppercase animate-fade-in-up delay-400">
               <div className="inline-flex items-center gap-2 border-2 border-black bg-white px-3 py-1 shadow-[3px_3px_0px_0px_rgba(0,0,0,1)]">
                 <span className="h-3 w-3 border-2 border-black bg-kcc-green" />
                 700+ ACTIVE DEVS
