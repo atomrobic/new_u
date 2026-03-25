@@ -59,7 +59,8 @@ export default function JoinCTA() {
                     href={card.href}
                     target="_blank"
                     rel="noopener"
-                    className="group border-4 border-white bg-white/5 p-8 transition-all hover:translate-x-[-4px] hover:translate-y-[-4px] hover:bg-white/10 hover:shadow-[8px_8px_0px_0px_rgba(255,255,255,1)]"
+                    className={`group border-4 border-white bg-white/5 p-8 transition-all hover:translate-x-[-4px] hover:translate-y-[-4px] hover:bg-white/10 hover:shadow-[8px_8px_0px_0px_rgba(255,255,255,1)] ${card.title === "Contribute on GitHub" ? "hidden md:block" : "block"
+                      }`}
                   >
                     <div className="flex items-start justify-between gap-6">
                       <div className="grid h-16 w-16 place-items-center border-3 border-white bg-kcc-accent shadow-[4px_4px_0px_0px_rgba(255,255,255,1)]">

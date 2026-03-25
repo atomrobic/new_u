@@ -3,23 +3,45 @@
 import Link from "next/link";
 import { ArrowUpRight, Github, MessageCircle } from "lucide-react";
 import ColourfulText from "./ColourfulText";
+import { useState, useEffect } from "react";
 
 const highlights = [
   "From 1-day beginners to 10+ years experienced developers",
   "Open source, meetups, peer learning, and real collaboration",
 ];
 
-const topContributors = [
-  { name: "Akhil", initial: "AK", color: "bg-kcc-accent", rotation: "rotate-[-2deg]" },
-  { name: "Shan", initial: "SH", color: "bg-kcc-green", rotation: "rotate-[1deg]" },
-  { name: "Akshay", initial: "AS", color: "bg-kcc-gold", rotation: "rotate-[-1deg]" },
-  { name: "Arjun", initial: "AR", color: "bg-[#C8B6FF]", rotation: "rotate-[2deg]" },
+const fallbackContributors = [
+  { name: "Akhil", initial: "AK", color: "bg-kcc-accent", rotation: "rotate-[-2deg]", avatar: "", commits: 0 },
+  { name: "Shan", initial: "SH", color: "bg-kcc-green", rotation: "rotate-[1deg]", avatar: "", commits: 0 },
+  { name: "Akshay", initial: "AS", color: "bg-kcc-gold", rotation: "rotate-[-1deg]", avatar: "", commits: 0 },
+  { name: "Arjun", initial: "AR", color: "bg-[#C8B6FF]", rotation: "rotate-[2deg]", avatar: "", commits: 0 },
 ];
 
+const defaultColors = ["bg-kcc-accent", "bg-kcc-green", "bg-kcc-gold", "bg-[#C8B6FF]"];
+const defaultRotations = ["rotate-[-2deg]", "rotate-[1deg]", "rotate-[-1deg]", "rotate-[2deg]"];
+
 export default function Hero() {
+  const [topContributors, setTopContributors] = useState(fallbackContributors);
 
-
-  return (
+  useEffect(() => {
+    fetch("https://api.github.com/repos/KERALACODERSCAFE/Keralacoderscafe/contributors?per_page=12")
+      .then((res) => res.json())
+      .then((data) => {
+        if (Array.isArray(data) && data.length > 0) {
+          const mapped = data.map((user, i) => ({
+            name: user.login,
+            initial: user.login.substring(0, 2).toUpperCase(),
+            color: defaultColors[i % defaultColors.length],
+            rotation: defaultRotations[i % defaultRotations.length],
+            avatar: user.avatar_url,
+            commits: user.contributions || 0,
+          }));
+          
+          setTopContributors(mapped);
+        }
+      })
+      .catch((err) => console.error("Failed to fetch GitHub contributors:", err));
+  }, []);  return (
     <header className="relative overflow-hidden px-6 pb-20 pt-32 md:px-12 lg:pb-28 lg:pt-48 bg-white border-b-4 border-black">
       {/* Geometric Background Elements */}
       <div className="absolute top-20 left-10 h-32 w-32 border-4 border-black bg-kcc-gold -z-10 rotate-12 shadow-[8px_8px_0px_0px_rgba(0,0,0,1)] hidden lg:block" />
@@ -43,8 +65,7 @@ export default function Hero() {
               </h1>
 
               <p
-                className="mt-12 max-w-[640px] text-[1.2rem] font-bold leading-relaxed text-black sm:text-[1.35rem] border-4 border-black p-6 shadow-[6px_6px_0px_0px_rgba(0,0,0,1)] animate-[gradientShift_5s_ease_infinite] bg-[length:200%_100%]"
-                style={{ backgroundImage: "linear-gradient(90deg, #FFE66D, #A5FFD6, #FFE66D)" }}
+                className="mt-12 max-w-[640px] text-[1.2rem] font-bold leading-relaxed text-black sm:text-[1.35rem] border-4 border-black p-6 shadow-[6px_6px_0px_0px_rgba(0,0,0,1)] bg-white"
               >
                 A vibrant community of developers, designers, and tech
                 enthusiasts from Kerala. Building the future, one commit at a
@@ -120,12 +141,12 @@ export default function Hero() {
                 </div>
               </div>
 
-              {/* Stamp Grid */}
-              <div className="grid grid-cols-2 gap-5 sm:gap-6">
-                {topContributors.map((person) => (
+              {/* Stamp Grid - Horizontally Scrollable */}
+              <div className="grid grid-rows-2 grid-flow-col auto-cols-[calc(50%-10px)] sm:auto-cols-[calc(50%-12px)] gap-5 sm:gap-6 overflow-x-auto pb-4 pt-2 -mx-2 px-2 snap-x snap-mandatory [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]">
+                {topContributors.map((person, i) => (
                   <div
-                    key={person.name}
-                    className={`group relative ${person.rotation} transition-all duration-200 hover:rotate-0 hover:scale-105`}
+                    key={`${person.name}-${i}`}
+                    className={`snap-center group relative ${person.rotation} transition-all duration-200 hover:rotate-0 hover:scale-105 shrink-0`}
                   >
                     {/* Stamp outer — perforated edge effect */}
                     <div className="relative border-4 border-black bg-white p-1 shadow-[4px_4px_0px_0px_rgba(0,0,0,1)]"
@@ -138,18 +159,22 @@ export default function Hero() {
                     >
                       {/* Inner stamp content */}
                       <div className={`relative border-2 border-black ${person.color} px-3 py-4 text-center`}>
-                        {/* Stamp value */}
-                        <div className="absolute top-1 right-2 text-[0.55rem] font-black text-black/30">
-                          ₹0.00
+                        {/* Stamp value (commits) */}
+                        <div className="absolute top-1 right-2 text-[0.55rem] font-black text-black/40">
+                          {person.commits ? `${person.commits} CMTS` : "₹0.00"}
                         </div>
 
                         {/* Avatar circle */}
-                        <div className="mx-auto mb-3 flex h-14 w-14 items-center justify-center border-3 border-black bg-white font-black text-xl text-black shadow-[3px_3px_0px_0px_rgba(0,0,0,0.15)]">
-                          {person.initial}
+                        <div className="mx-auto mb-3 flex h-14 w-14 items-center justify-center border-3 border-black bg-white font-black text-xl text-black shadow-[3px_3px_0px_0px_rgba(0,0,0,0.15)] overflow-hidden">
+                          {person.avatar ? (
+                            <img src={person.avatar} alt={person.name} className="h-full w-full object-cover" />
+                          ) : (
+                            person.initial
+                          )}
                         </div>
 
                         {/* Name */}
-                        <div className="font-black uppercase text-[0.85rem] tracking-wide text-black leading-none">
+                        <div className="font-black uppercase text-[0.85rem] tracking-wide text-black leading-none truncate max-w-[80px] mx-auto">
                           {person.name}
                         </div>
 
@@ -170,14 +195,50 @@ export default function Hero() {
                     </div>
                   </div>
                 ))}
+
+                {/* 'YOU?' Stamp Card for New Contributors */}
+                <a
+                  href="https://github.com/KERALACODERSCAFE/Keralacoderscafe"
+                  target="_blank"
+                  rel="noopener"
+                  className="snap-center group relative rotate-[1deg] transition-all duration-200 hover:rotate-0 hover:scale-105 shrink-0 block"
+                >
+                  <div className="relative border-4 border-black bg-white p-1 shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] h-full"
+                    style={{
+                      backgroundImage: "radial-gradient(circle, transparent 40%, #000 41%, #000 44%, transparent 45%)",
+                      backgroundSize: "10px 10px",
+                      backgroundPosition: "-5px -5px",
+                    }}
+                  >
+                    <div className="relative border-2 border-dashed border-black bg-kcc-paper px-3 py-4 text-center h-full flex flex-col items-center justify-center transition-colors group-hover:bg-kcc-gold">
+                      <div className="absolute top-1 right-2 text-[0.55rem] font-black text-black/40">
+                        1st PR
+                      </div>
+                      <div className="mx-auto mb-3 flex h-14 w-14 items-center justify-center border-3 border-black bg-white font-black text-2xl text-black shadow-[3px_3px_0px_0px_rgba(0,0,0,0.15)] group-hover:scale-110 transition-transform">
+                        +
+                      </div>
+                      <div className="font-black uppercase text-[0.85rem] tracking-wide text-black leading-none truncate max-w-[80px] mx-auto">
+                        YOU?
+                      </div>
+                      <div className="mt-1.5 text-[0.5rem] font-bold uppercase tracking-[0.25em] text-black/50">
+                        Contribute
+                      </div>
+                    </div>
+                  </div>
+                </a>
               </div>
 
-              {/* +30 Contributors label */}
-              <div className="mt-6 flex items-center justify-center gap-3">
+              {/* View All Contributors label */}
+              <div className="mt-2 flex items-center justify-center gap-3">
                 <div className="h-[2px] flex-1 bg-black/15" />
-                <div className="border-3 border-black bg-kcc-gold px-4 py-2 font-black uppercase text-sm text-black shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] hover:translate-x-[-2px] hover:translate-y-[-2px] hover:shadow-[6px_6px_0px_0px_rgba(0,0,0,1)] transition-all cursor-pointer">
-                  +30 Contributors
-                </div>
+                <a
+                  href="https://github.com/KERALACODERSCAFE/Keralacoderscafe/graphs/contributors"
+                  target="_blank"
+                  rel="noopener"
+                  className="border-3 border-black bg-kcc-gold px-4 py-2 font-black uppercase text-sm text-black shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] hover:translate-x-[-2px] hover:translate-y-[-2px] hover:shadow-[6px_6px_0px_0px_rgba(0,0,0,1)] active:translate-x-[2px] actvie:translate-y-[2px] active:shadow-[2px_2px_0px_0px_rgba(0,0,0,1)] transition-all cursor-pointer"
+                >
+                  View All Contributors
+                </a>
                 <div className="h-[2px] flex-1 bg-black/15" />
               </div>
 
